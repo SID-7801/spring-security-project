@@ -22,6 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -33,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse signup(Signup request) {
         var member = Member.builder().name(request.getName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .wing(request.getWing())
                 .flat(request.getFlat())
                 .mobile(request.getMobile())
